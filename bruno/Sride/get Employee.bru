@@ -1,0 +1,54 @@
+meta {
+  name: get Employee
+  type: http
+  seq: 2
+}
+
+get {
+  url: {{baseurl}}/api/v1/employees
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+}
+
+tests {
+  test("Response time is less than 200ms", function () {
+    expect(res.getResponseTime()).to.be.below(200);
+  });
+  
+  test("Response status code is 200", function () {
+      expect(res.getStatus()).to.equal(200);
+  });
+  
+  
+  test("Content-Type header is application/json", function () {
+  //     expect(pm.response.headers.get("Content-Type")).to.include("application/json");
+  });
+  
+  /*
+  test("Response has the required fields - id and title", function () {
+      const responseData = res.getBody();
+      
+      expect(responseData).to.be.an('object');
+      expect(responseData).to.have.property('id');
+      expect(responseData).to.have.property('title');
+  });
+  
+  
+  test("Title is a non-empty string", function () {
+    const responseData = res.getBody();
+    
+    expect(responseData).to.be.an('object');
+    expect(responseData.title).to.be.a('string').and.to.have.lengthOf.at.least(1, "Title should not be empty");
+  });
+  
+  */
+  test("Response time is within an acceptable range", function () {
+    expect(res.getResponseTime()).to.be.below(300);
+  });
+  
+  
+}
